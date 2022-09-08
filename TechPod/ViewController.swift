@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		table.dataSource = self
+        table.delegate = self
 		songNameArray = ["カノン", "エリーゼのために", "G線上のアリア"]
 		fileNameArray = ["cannon", "elise", "aria"]
 		imageNameArray = ["Pachelbel.jpg", "Beethoven.jpg", "Bach.jpg"]
@@ -31,14 +32,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
 		cell?.textLabel?.text = songNameArray[indexPath.row]
-		cell?.imageView?.image = UIImage(named: imageNameArray[indexPath.row])
-		return cell!
+        cell?.imageView?.image = UIImage(named: imageNameArray[indexPath.row])
+        return cell!
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		print("\(songNameArray[indexPath.row])が選ばれました！")
 		let audioPath = URL(fileURLWithPath: Bundle.main.path(forResource: fileNameArray[indexPath.row], ofType: "mp3")!)
 		audioPlayer = try? AVAudioPlayer(contentsOf: audioPath)
+        audioPlayer.play()
 	}
 
 }
